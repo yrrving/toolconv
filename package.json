@@ -1,0 +1,21 @@
+{
+  "name": "toolconv",
+  "version": "0.1.0",
+  "description": "Borstbindare Wenman: offline media conversion CLI.",
+  "bin": {
+    "toolconv": "./bin/toolconv.js",
+    "borstbindare-wenman": "./bin/toolconv.js"
+  },
+  "type": "commonjs",
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "ffmpeg",
+    "media",
+    "conversion",
+    "cli",
+    "offline"
+  ],
+  "license": "MIT"
+}
