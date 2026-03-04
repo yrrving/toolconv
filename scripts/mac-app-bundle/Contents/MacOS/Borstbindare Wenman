@@ -1,0 +1,17 @@
+#!/bin/zsh
+
+set -euo pipefail
+
+SCRIPT_PATH="/Users/nicklaskarlsson/Desktop/toolconv/scripts/mac-native-ui.py"
+
+if ! command -v python3 >/dev/null 2>&1; then
+  osascript -e 'display alert "Borstbindare Wenman" message "python3 saknas. Installera python3 och prova igen." as warning'
+  exit 1
+fi
+
+if [ ! -f "$SCRIPT_PATH" ]; then
+  osascript -e 'display alert "Borstbindare Wenman" message "Det native UI-scriptet hittades inte i toolconv-mappen på skrivbordet." as warning'
+  exit 1
+fi
+
+exec python3 "$SCRIPT_PATH"
