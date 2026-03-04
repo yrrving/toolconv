@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Borstbindare Wenman</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero">
+        <p class="eyebrow">Offline Media Converter</p>
+        <h1>Borstbindare Wenman</h1>
+        <p class="lede">
+          A local, offline-first converter running on your own computer.
+          This first version converts MP4 files into WAV files.
+        </p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>MP4 to WAV</h2>
+          <p>Select an MP4 file, convert it locally, and download the WAV result.</p>
+        </div>
+
+        <form id="convert-form" class="convert-form">
+          <label class="file-picker">
+            <span>Choose MP4 file</span>
+            <input id="file-input" type="file" accept=".mp4,video/mp4" required>
+          </label>
+
+          <div class="file-meta" id="file-meta">No file selected.</div>
+
+          <button id="convert-button" type="submit">Convert to WAV</button>
+        </form>
+
+        <div id="status" class="status idle">Waiting for file.</div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+  </html>

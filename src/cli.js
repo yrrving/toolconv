@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { resolveConverter, listSupportedConversions } = require("./converters");
 const { ensureFfmpegAvailable, convertWithFfmpeg } = require("./ffmpeg");
+const { startServer } = require("./server");
 
 function helpText() {
   const conversions = listSupportedConversions()
@@ -14,14 +15,17 @@ function helpText() {
     "",
     "Usage:",
     "  toolconv convert <input-file> <output-file>",
+    "  toolconv serve [--port <port>]",
     "  borstbindare-wenman convert <input-file> <output-file>",
+    "  borstbindare-wenman serve [--port <port>]",
     "",
     "Supported conversions:",
     conversions,
     "",
     "Examples:",
     "  toolconv convert clip.mp4 clip.wav",
-    "  borstbindare-wenman convert /path/in.mp4 /path/out.wav"
+    "  borstbindare-wenman convert /path/in.mp4 /path/out.wav",
+    "  toolconv serve --port 4321"
   ].join("\n");
 }
 
@@ -68,6 +72,35 @@ async function runConvert(args) {
   return 0;
 }
 
+async function runServe(args) {
+  let port = 3000;
+
+  for (let index = 0; index < args.length; index += 1) {
+    const current = args[index];
+
+    if (current === "--port") {
+      const next = args[index + 1];
+      if (!next) {
+        throw new Error("Missing value for --port");
+      }
+
+      port = Number.parseInt(next, 10);
+      index += 1;
+      continue;
+    }
+
+    throw new Error(`Unknown serve option: ${current}`);
+  }
+
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    throw new Error("Port must be an integer between 1 and 65535.");
+  }
+
+  await ensureFfmpegAvailable();
+  await startServer({ port });
+  return 0;
+}
+
 async function runCli(args) {
   if (args.length === 0 || args[0] === "help" || args[0] === "--help" || args[0] === "-h") {
     console.log(helpText());
@@ -77,6 +110,10 @@ async function runCli(args) {
   const [command, ...commandArgs] = args;
   if (command === "convert") {
     return runConvert(commandArgs);
+  }
+
+  if (command === "serve") {
+    return runServe(commandArgs);
   }
 
   throw new Error(`Unknown command: ${command}\n\n${helpText()}`);

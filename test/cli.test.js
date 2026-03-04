@@ -20,3 +20,10 @@ test("runCli rejects unknown command", async () => {
     /Unknown command: unknown-command/
   );
 });
+
+test("runCli rejects invalid serve port", async () => {
+  await assert.rejects(
+    () => runCli(["serve", "--port", "99999"]),
+    /Port must be an integer between 1 and 65535/
+  );
+});

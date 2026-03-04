@@ -1,0 +1,162 @@
+:root {
+  --bg-top: #e7efe8;
+  --bg-bottom: #ccd8c5;
+  --panel: rgba(251, 249, 242, 0.9);
+  --ink: #1c281e;
+  --muted: #526152;
+  --line: rgba(28, 40, 30, 0.12);
+  --accent: #2f6c45;
+  --accent-strong: #1f4c30;
+  --shadow: 0 24px 60px rgba(33, 47, 36, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.65), transparent 35%),
+    linear-gradient(160deg, var(--bg-top), var(--bg-bottom));
+}
+
+.app-shell {
+  width: min(860px, calc(100% - 32px));
+  margin: 48px auto;
+  display: grid;
+  gap: 24px;
+}
+
+.hero,
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+}
+
+.hero {
+  padding: 32px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+h1,
+h2 {
+  margin: 0;
+  font-family: "Georgia", "Times New Roman", serif;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 0.95;
+  max-width: 10ch;
+}
+
+.lede,
+.panel-head p,
+.file-meta,
+.status {
+  color: var(--muted);
+}
+
+.lede {
+  margin: 16px 0 0;
+  max-width: 56ch;
+  line-height: 1.6;
+}
+
+.panel {
+  padding: 28px;
+}
+
+.panel-head p {
+  margin: 8px 0 0;
+  line-height: 1.5;
+}
+
+.convert-form {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.file-picker {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  border: 1px dashed rgba(47, 108, 69, 0.32);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.file-picker span {
+  font-weight: 600;
+}
+
+input[type="file"] {
+  font: inherit;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 20px;
+  font: inherit;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.status {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.6);
+  min-height: 52px;
+  line-height: 1.4;
+}
+
+.status.busy {
+  color: var(--ink);
+}
+
+.status.success {
+  color: #174c2d;
+}
+
+.status.error {
+  color: #8b1e1e;
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    width: min(100%, calc(100% - 20px));
+    margin: 20px auto;
+  }
+
+  .hero,
+  .panel {
+    padding: 20px;
+    border-radius: 18px;
+  }
+}
