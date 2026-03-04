@@ -2,16 +2,38 @@
 
 set -euo pipefail
 
-SCRIPT_PATH="/Users/nicklaskarlsson/Desktop/toolconv/scripts/mac-native-ui.py"
+export PATH="/Library/Frameworks/Python.framework/Versions/3.13/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-if ! command -v python3 >/dev/null 2>&1; then
-  osascript -e 'display alert "Borstbindare Wenman" message "python3 saknas. Installera python3 och prova igen." as warning'
+SCRIPT_PATH="/Users/nicklaskarlsson/Desktop/toolconv/scripts/mac-native-ui.py"
+LOG_FILE="/tmp/BorstbindareWenmanNative.log"
+
+PYTHON_BIN=""
+
+for CANDIDATE in \
+  "/Library/Frameworks/Python.framework/Versions/3.13/bin/python3" \
+  "/usr/local/bin/python3" \
+  "/opt/homebrew/bin/python3"
+do
+  if [ -x "$CANDIDATE" ]; then
+    PYTHON_BIN="$CANDIDATE"
+    break
+  fi
+done
+
+if [ -z "$PYTHON_BIN" ]; then
+  if command -v python3 >/dev/null 2>&1; then
+    PYTHON_BIN="$(command -v python3)"
+  fi
+fi
+
+if [ -z "$PYTHON_BIN" ]; then
+  /usr/bin/osascript -e 'display alert "Borstbindare Wenman" message "python3 saknas. Installera python3 och prova igen." as warning'
   exit 1
 fi
 
 if [ ! -f "$SCRIPT_PATH" ]; then
-  osascript -e 'display alert "Borstbindare Wenman" message "Det native UI-scriptet hittades inte i toolconv-mappen på skrivbordet." as warning'
+  /usr/bin/osascript -e 'display alert "Borstbindare Wenman" message "Det native UI-scriptet hittades inte i toolconv-mappen på skrivbordet." as warning'
   exit 1
 fi
 
-exec python3 "$SCRIPT_PATH"
+exec "$PYTHON_BIN" "$SCRIPT_PATH" >>"$LOG_FILE" 2>&1
