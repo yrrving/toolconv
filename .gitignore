@@ -3,3 +3,4 @@ node_modules/
 *.tmp
 *.wav
 *.mp4
+__pycache__/
